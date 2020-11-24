@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require('../db/db')
-const User = require('./users')
-const Product = require('./products')
+const User = require('./users')(sequelize, DataTypes)
+const Product = require('./products')(sequelize, DataTypes)
 
 module.exports = function(sequelize, Sequelize) {
     const Order = sequelize.define('Orders', {
@@ -9,18 +9,6 @@ module.exports = function(sequelize, Sequelize) {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        },
-        user_id: {
-            references: {
-                model: User,
-                key: 'id'
-            }
-        },
-        product_id: {
-            references: {
-                model: Product,
-                key: 'id'
-            }
         },
         quantity: {
             type: DataTypes.INTEGER,
@@ -32,7 +20,22 @@ module.exports = function(sequelize, Sequelize) {
             type: DataTypes.ENUM,
             values: ['cart', 'confirmed', 'shipped'],
             defaultValue: 'cart' 
-        }
+        },
+        
+        user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: User,
+                key: 'id'
+            }
+        },
+        product_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: Product,
+                key: 'id'
+            }
+        },
     })
     return Order
 }

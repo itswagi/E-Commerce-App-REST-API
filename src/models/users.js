@@ -1,10 +1,10 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require('../db/db');
 const bcrypt = require('bcrypt')
-const Billing = require('./billing')
+const Billing = require('./billing')(sequelize, DataTypes)
 
 module.exports = function (sequelize, Sequelize) {
-    const User = sequelize.define('User', {
+    const User = sequelize.define('Users', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
