@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize")
-const sequelize = require('../db/db');
+const sequelize = require('../db/db')
+const User = require('./users')
+const Product = require('./products')
 
 module.exports = function(sequelize, Sequelize) {
     const Order = sequelize.define('Orders', {
@@ -32,4 +34,5 @@ module.exports = function(sequelize, Sequelize) {
             defaultValue: 'cart' 
         }
     })
+    return Order
 }

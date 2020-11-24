@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize")
 const sequelize = require('../db/db');
 const bcrypt = require('bcrypt')
-const billing = require('./billing')
+const Billing = require('./billing')
 
 module.exports = function (sequelize, Sequelize) {
     const User = sequelize.define('User', {
