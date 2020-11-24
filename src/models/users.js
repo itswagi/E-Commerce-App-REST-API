@@ -24,7 +24,7 @@ module.exports = function (sequelize, Sequelize) {
         billing_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: billing,
+                model: Billing,
                 key: 'id'
             }
         }
