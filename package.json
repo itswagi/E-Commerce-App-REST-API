@@ -1,0 +1,19 @@
+{
+  "name": "e-commerce-app-example",
+  "version": "1.0.0",
+  "description": "An example project showing rest api setup with express, passport, sequelize, postgresql",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itswagi/E-Commerce-App-REST-API.git"
+  },
+  "author": "Wajahat Zia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itswagi/E-Commerce-App-REST-API/issues"
+  },
+  "homepage": "https://github.com/itswagi/E-Commerce-App-REST-API#readme"
+}
