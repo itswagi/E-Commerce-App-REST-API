@@ -13,6 +13,7 @@ app.use(morgan('dev'))
 app.listen(process.env.PORT, async () => {
     console.log(`Example app listening at http://localhost:${process.env.PORT}`)
     try{
+        await sequelize.authenticate()
         await sequelize.sync(
             //{force: true}
         )
