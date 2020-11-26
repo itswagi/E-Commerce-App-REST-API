@@ -1,10 +1,10 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const router = express.Router();
+const authRouter = express.Router();
 require('../controllers/passport.controller')
 
-router.post(
+authRouter.post(
     '/signup',
     passport.authenticate('signup', { session: false }),
     async (req, res, next) => {
@@ -14,7 +14,7 @@ router.post(
       });
     }
   )
-router.post(
+authRouter.post(
 '/login',
 async (req, res, next) => {
     passport.authenticate(
@@ -23,16 +23,16 @@ async (req, res, next) => {
         //console.log(user)
         try {
         if (err || !user) {
-            const error = new Error('An error occurred.');
+            const err = {errors: [{message: 'Error Occured'}], status: 400}
 
-            return next(error);
+            return next(err);
         }
 
         req.login(
             user,
             { session: false },
-            async (error) => {
-            if (error) return next(error);
+            async (err) => {
+            if (err) return next(err);
 
             const body = { _id: user._id, email: user.email };
             const token = jwt.sign({ user: body }, 'TOP_SECRET');
@@ -40,12 +40,16 @@ async (req, res, next) => {
             return res.json({ token });
             }
         );
-        } catch (error) {
-        return next(error);
+        } catch (err) {
+        return next(err);
         }
     }
     )(req, res, next);
 }
-);
+)
 
-module.exports = router;
+authRouter.use((err, req, res, next) => {
+    res.status(err.status || 400).json({message: err.errors[0].message})
+})
+
+module.exports = authRouter;

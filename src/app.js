@@ -10,24 +10,31 @@ const User = require('./models/users')(sequelize, DataTypes)
 const Order = require('./models/orders')(sequelize, DataTypes)
 const Product = require('./models/products')(sequelize, DataTypes)
 const Billing = require('./models/billing')(sequelize, DataTypes)
-const authRouter = require('./routes/auth')
+const YAML = require('yamljs')
+const swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = YAML.load('./swagger.yaml');
+//const authRouter = require('./routes/auth')
 require('./controllers/auth.controller')
 const app = express()
 
 //Middleware
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+//Disabled for development
 //app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized:true}));
 //app.use(passport.initialize())
 //app.use(passport.session())
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-const authjwt = require('./routes/authjwt')
+const authRouter = require('./routes/authjwt')
 
-app.use('/', authjwt)
+//User Signup and Login Routes
+app.use('/', authRouter)
 app.get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('Reached Endpoint')
 })
-app.use('/auth', authRouter)
+//Disabled for Development
+//app.use('/auth', authRouter)
 
 app.get('/', (req,res) => {
     res.send('Hello!')
