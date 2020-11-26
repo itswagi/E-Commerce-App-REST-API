@@ -1,26 +1,33 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  title: Express-Sequelize-Passport-Example-API
+  title: E-Commerce REST API
   version: 1.0.0
-host: 'localhost:3000'
+  
+host: localhost:3000
 basePath: /
+securityDefinitions:
+  Token:
+    type: apiKey
+    name: secret_token
+    in: query
+    
 paths:
   /signup:
     post:
       summary: Add User to database
-      produces: 
-        - application/json
       parameters:
         - in : query
           name: email
-          type: string
           required: true
           description: User's email address
+          type: string
         - in: query
           name: password
-          type: string
           required: true
           description: User's password
+          type: string
+      produces:
+        - application/json
       responses:
         200:
           description: Returns User's Object
@@ -44,3 +51,67 @@ paths:
                   billing_id:
                     type: integer
                     example: 1
+      tags:
+        [Auth]
+  
+  /login:
+    post:
+      summary: Login to Application
+      parameters:
+        - in : query
+          name: email
+          required: true
+          description: User's email address
+          type: string
+          
+        - in: query
+          name: password
+          required: true
+          description: User's password
+          type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description:  Returns Unique Token
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+      tags:
+        [Auth]
+        
+  /test:
+    get:
+      summary: test secure route
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Returns string
+          schema:
+            type: string
+      security:
+        - Token: []
+        
+  /val:
+    post:
+      produces:
+        - applicaition/json
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          description: string
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+          
+      responses:
+        200:
+          description: OK

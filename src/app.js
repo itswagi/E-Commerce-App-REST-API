@@ -10,6 +10,7 @@ const User = require('./models/users')(sequelize, DataTypes)
 const Order = require('./models/orders')(sequelize, DataTypes)
 const Product = require('./models/products')(sequelize, DataTypes)
 const Billing = require('./models/billing')(sequelize, DataTypes)
+const cors = require('cors')
 const YAML = require('yamljs')
 const swaggerUi = require('swagger-ui-express'),
     swaggerDocument = YAML.load('./swagger.yaml');
@@ -17,8 +18,12 @@ const swaggerUi = require('swagger-ui-express'),
 require('./controllers/auth.controller')
 const app = express()
 
+
+
 //Middleware
-app.use(bodyParser.json())
+app.use(cors())
+//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(morgan('dev'))
 //Disabled for development
 //app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized:true}));
@@ -27,6 +32,12 @@ app.use(morgan('dev'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const authRouter = require('./routes/authjwt')
+
+app.post('/val', (req, res) => {
+    console.log(req.body)
+    //console.log(req.data)
+    res.status(200).send()
+})
 
 //User Signup and Login Routes
 app.use('/', authRouter)
