@@ -28,6 +28,10 @@ module.exports = function (sequelize, Sequelize) {
                 key: 'id'
             }
         }
+    }, 
+    {
+        timestamps: false,
+        
     })
     User.prototype.validPassword = async function(password) {
         return await bcrypt.compare(password, this.password)
