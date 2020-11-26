@@ -17,10 +17,16 @@ const app = express()
 //Middleware
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized:true}));
-app.use(passport.initialize())
-app.use(passport.session())
+//app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized:true}));
+//app.use(passport.initialize())
+//app.use(passport.session())
 
+const authjwt = require('./routes/authjwt')
+
+app.use('/', authjwt)
+app.get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.send('Reached Endpoint')
+})
 app.use('/auth', authRouter)
 
 app.get('/', (req,res) => {

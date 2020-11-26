@@ -43,7 +43,6 @@ authRouter.post('/register', isLoggedIn, async (req, res, next) => {
 })
 
 authRouter.post('/login', isLoggedIn, passport.authenticate('local'), (req, res, next) => {
-    console.log(req.query)
     res.status(200).json({message: 'Login Successful'})
 })
 
