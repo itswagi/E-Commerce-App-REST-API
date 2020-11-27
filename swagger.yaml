@@ -170,7 +170,6 @@ paths:
       tags:
         - Products
         
-  
   /products:
     get:
       summary: Returns products by category or All
