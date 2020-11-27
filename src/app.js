@@ -48,6 +48,11 @@ app.get('/test', passport.authenticate('jwt', { session: false }), (req, res) =>
 //Disabled for Development
 //app.use('/auth', authRouter)
 
+//Error Handler
+app.use((err, req, res, next) => {
+    console.log(err)
+    res.status(err.status || 400).json({message: err.errors[0].message})
+})
 
 app.listen(process.env.PORT, async () => {
     console.log(`Example app listening at http://localhost:${process.env.PORT}`)
