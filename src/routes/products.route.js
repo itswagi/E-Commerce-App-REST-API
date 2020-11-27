@@ -52,6 +52,7 @@ productsRouter.post('/', async (req, res, next) => {
         return next(err)
     }else{
         try{
+            //INSERT INTO Product ({keys}) VALUES [{values}]
             const product = await Products.create( JSON.stringify(req.body) )
             /*const product = await Products.create({
                 sku: req.body.sku,
@@ -77,6 +78,7 @@ productsRouter.put('/:productId', async (req, res, next) => {
         return next(err)
     } else {
         try{
+            //UPDATE products SET {key} = {value},... WHERE id = {productId}
             const product = await Products.update(
                 JSON.stringify(req.body),
                 {
@@ -93,8 +95,23 @@ productsRouter.put('/:productId', async (req, res, next) => {
 })
 
 //Delete Product
-productsRouter.delete('/:id', (req, res, next) => {
-    
+productsRouter.delete('/:productId', async (req, res, next) => {
+    if(!req.params.id){
+        var err = {errors: [{message: 'Provide Product ID'}], status: 400}
+        return next(err)
+    } else {
+        try{
+            //DELETE FROM products WHERE id = {productId}
+            await Products.destroy({
+                where: {
+                    id: req.params.productId
+                }
+            })
+            res.status(204).send()
+        }catch(err){
+            next(err)
+        }
+    }
 })
 
 
