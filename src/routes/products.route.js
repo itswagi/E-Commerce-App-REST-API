@@ -115,10 +115,5 @@ productsRouter.delete('/:productId', async (req, res, next) => {
 })
 
 
-//Error Handler
-productsRouter.use((err, req, res, next) => {
-    console.log(err)
-    res.status(err.status || 400).json({message: err.errors[0].message})
-})
 
 module.exports = productsRouter
