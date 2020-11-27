@@ -225,6 +225,53 @@ paths:
       security:
         - Token: []
         
+  /users:
+    get:
+      summary: Get User Information
+      produces:
+        - application/json
+      responses:
+        200:
+          description: User Information
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              email:
+                type: string
+              password:
+                type: string
+              billing_id:
+                type: integer
+      tags:
+        - Users
+      security:
+        - Token: []
+    put:
+      summary: Update User Information
+      consumes:
+        - application/json
+      parameters:
+        - name: payload
+          in: body
+          required: true
+          description: object
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: OK
+      tags:
+        - Users
+      security:
+        - Token: []
+        
     
         
       

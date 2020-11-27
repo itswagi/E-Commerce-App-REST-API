@@ -3,6 +3,7 @@ const User = require('../models/users')(sequelize, DataTypes)
 const userRouter = express.Router()
 
 //Get all Users
+/*
 userRouter.get('/', (req, res, next) => {
     try{
         const users = await User.findAll()
@@ -10,32 +11,35 @@ userRouter.get('/', (req, res, next) => {
     }catch(err){
         next(err)
     }
-})
+})*/
 
 //Get User Information
-userRouter.get('/:userId', (req, res, next) => {
-    if(!req.params.userId){
-        var err = {errors: [{message: 'Provide User ID'}], status: 400}
+userRouter.get('/', (req, res, next) => {
+    if(!req.user){
+        var err = {errors: [{message: 'Please Log in'}], status: 400}
         return next(err)
     }
     try{
-        const user = await User.findById(req.params.userId)
+        //SELECT * FROM users WHERE email = {user.email}
+        const user = await User.findOne({where: {email: req.user.email}})
         res.send(user)
     }catch(err){
         next(err)
     }
 })
 
-userRouter.put('/:userId', (req, res, next) => {
-    if(!req.params.userId ||  ((JSON.stringify(req.body) === '{}'))){
+//Update User Information
+userRouter.put('/', (req, res, next) => {
+    if(!req.user ||  ((JSON.stringify(req.body) === '{}'))){
         var err = {errors: [{message: 'Provide User ID and information'}], status: 400}
         return next(err)
     }
     try{
+        //UPDATE TABLE users SET ({body.keys} = {values}, ..) WHERE email = {user.email}
         const user = await User.update(
             JSON.stringify(req.body), {
                 where: {
-                    id: req.params.userId
+                    email: req.user.email
                 }
             }
             )
