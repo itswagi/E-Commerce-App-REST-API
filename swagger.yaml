@@ -81,37 +81,156 @@ paths:
                 type: string
       tags:
         [Auth]
-        
-  /test:
+  
+  /products/{productId}:
     get:
-      summary: test secure route
-      produces:
+      summary: Returns a product by ID
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          type: integer
+      produces: 
         - application/json
       responses:
         200:
-          description: Returns string
-          schema:
-            type: string
-      security:
-        - Token: []
-        
-  /val:
-    post:
-      produces:
-        - applicaition/json
-      parameters:
-        - in: body
-          name: payload
-          required: true
-          description: string
+          description: A product object
           schema:
             type: object
             properties:
               id:
-                type: string
+                type: integer
+              sku:
+                type: integer
               name:
                 type: string
+              price:
+                type: integer
+              description:
+                type: string
+              thumbnail:
+                type: string
+              image:
+                type: string
+              category:
+                type: string
+              stock:
+                type: integer
+      tags:
+        - Products
+      security:
+        - Token: []
+        
+    put:
+      summary: Update product listing
+      consumes:
+        - application/json
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          type: integer
           
+        - name: payload
+          in: body
+          required: true
+          description: object
+          schema:
+            type: object
+            properties:
+              sku:
+                type: integer
+              name:
+                type: string
+              price:
+                type: integer
+              description:
+                type: string
+              thumbnail:
+                type: string
+              image:
+                type: string
+              category:
+                type: string
+              stock:
+                type: integer
       responses:
         200:
           description: OK
+      tags:
+        - Products
+    
+    delete:
+      summary: Delete Product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+      tags:
+        - Products
+        
+  
+  /products:
+    get:
+      summary: Returns products by category
+      parameters:
+        - name: category
+          in: query
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: An object of products by category
+          schema:
+            type: object
+      tags:
+        - Products
+      security:
+        - Token: []
+    
+        
+    post:
+      summary: Create product
+      consumes: 
+        - application/json
+      parameters:
+        - name: Payload
+          in: body
+          required: true
+          description: object
+          schema:
+            type: object
+            properties:
+              sku:
+                type: integer
+              name:
+                type: string
+              price:
+                type: integer
+              description:
+                type: string
+              thumbnail:
+                type: string
+              image:
+                type: string
+              category:
+                type: string
+              stock:
+                type: integer
+      responses:
+        200:
+          description: OK
+      tags:
+        - Products
+      security:
+        - Token: []
+        
+    
+        
+      

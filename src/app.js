@@ -22,7 +22,6 @@ const app = express()
 
 //Middleware
 app.use(cors())
-//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'))
 //Disabled for development
@@ -32,24 +31,22 @@ app.use(morgan('dev'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const authRouter = require('./routes/authjwt')
-
-app.post('/val', (req, res) => {
-    console.log(req.body)
-    //console.log(req.data)
-    res.status(200).send()
-})
+const productsRouter = require('./routes/products.route')
+const ordersRouter = require('./routes/orders.route')
+const billingRouter = require('./routes/billing.route')
 
 //User Signup and Login Routes
 app.use('/', authRouter)
+app.use(passport.authenticate('jwt', { session: false })) //Authorization Middleware
+app.use('/product', productsRouter)
+app.use('/order', ordersRouter)
+app.use('/billing', billingRouter)
+/*
 app.get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('Reached Endpoint')
-})
+})*/
 //Disabled for Development
 //app.use('/auth', authRouter)
-
-app.get('/', (req,res) => {
-    res.send('Hello!')
-})
 
 
 app.listen(process.env.PORT, async () => {

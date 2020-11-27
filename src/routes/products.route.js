@@ -1,9 +1,11 @@
 const express = require('express')
 
-const productRouter = express.Router()
+const productsRouter = express.Router()
 
 //Create Product
 
-productRouter.post('/')
+productsRouter.get('/', (req, res, next) => {
+    res.send('Allowed')
+})
 
-module.exports = productRouter
+module.exports = productsRouter
