@@ -24,4 +24,9 @@ productsRouter.get('/:productId', async (req, res, next) => {
 
 
 
+//Error Handler
+productsRouter.use((err, req, res, next) => {
+
+})
+
 module.exports = productsRouter
