@@ -1,8 +1,7 @@
 swagger: "2.0"
 info:
   title: E-Commerce REST API
-  version: 1.0.0
-  
+  version: 1.0.0  
 host: localhost:3000
 basePath: /
 securityDefinitions:
@@ -119,8 +118,7 @@ paths:
       tags:
         - Products
       security:
-        - Token: []
-        
+        - Token: [] 
     put:
       summary: Update product listing
       consumes:
@@ -159,7 +157,6 @@ paths:
           description: OK
       tags:
         - Products
-    
     delete:
       summary: Delete Product
       parameters:
@@ -192,9 +189,7 @@ paths:
       tags:
         - Products
       security:
-        - Token: []
-    
-        
+        - Token: []    
     post:
       summary: Create product
       consumes: 

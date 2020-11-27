@@ -38,7 +38,7 @@ const billingRouter = require('./routes/billing.route')
 //User Signup and Login Routes
 app.use('/', authRouter)
 app.use(passport.authenticate('jwt', { session: false })) //Authorization Middleware
-app.use('/product', productsRouter)
+app.use('/products', productsRouter)
 app.use('/order', ordersRouter)
 app.use('/billing', billingRouter)
 /*

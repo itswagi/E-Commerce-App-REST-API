@@ -20,7 +20,6 @@ async (req, res, next) => {
     passport.authenticate(
     'login',
     async (err, user, info) => {
-        //console.log(user)
         try {
         if (err || !user) {
             const err = {errors: [{message: 'Error Occured'}], status: 400}
@@ -34,7 +33,7 @@ async (req, res, next) => {
             async (err) => {
             if (err) return next(err);
 
-            const body = { _id: user._id, email: user.email };
+            const body = { _id: user.id, email: user.email };
             const token = jwt.sign({ user: body }, 'TOP_SECRET');
 
             return res.json({ token });
