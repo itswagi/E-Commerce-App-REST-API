@@ -23,6 +23,24 @@ ordersRouter.get('/', (req, res, next) => {
     }
 })
 
+//Get Order by id
+ordersRouter.get('/:id', (req, res, next) => {
+    try{
+        //SELECT id FROM users WHERE email = {req.user.email}
+        const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
+        const order = await Order.findOne({
+            where: {
+                [Op.and]: [
+                    {user_id: userId}, {id: req.params.id}
+                ]
+            }
+        })
+        res.send(order)
+    }catch(err){
+        next(err)
+    }
+})
+
 
 //var err = {errors: [{message: 'Provide Product Information'}], status: 400}
 //return next(err)
