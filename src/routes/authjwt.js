@@ -14,9 +14,8 @@ authRouter.post(
       });
     }
   )
-authRouter.post(
-'/login',
-async (req, res, next) => {
+authRouter.post('/login', async (req, res, next) => {
+  console.log('1')
     passport.authenticate(
     'login',
     async (err, user, info) => {
@@ -27,10 +26,7 @@ async (req, res, next) => {
             return next(err);
         }
 
-        req.login(
-            user,
-            { session: false },
-            async (err) => {
+        req.login( user, { session: false }, async (err) => {
             if (err) return next(err);
 
             const body = { _id: user.id, email: user.email };

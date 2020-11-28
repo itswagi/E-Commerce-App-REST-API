@@ -34,17 +34,16 @@ const authRouter = require('./routes/authjwt')
 const productsRouter = require('./routes/products.route')
 const ordersRouter = require('./routes/orders.route')
 const billingRouter = require('./routes/billing.route')
+const userRouter = require('./routes/users.route')
 
 //User Signup and Login Routes
 app.use('/', authRouter)
 app.use(passport.authenticate('jwt', { session: false })) //Authorization Middleware
+app.use('/users', userRouter)
 app.use('/products', productsRouter)
 app.use('/order', ordersRouter)
 app.use('/billing', billingRouter)
-/*
-app.get('/test', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.send('Reached Endpoint')
-})*/
+
 //Disabled for Development
 //app.use('/auth', authRouter)
 

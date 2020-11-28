@@ -1,5 +1,5 @@
 const express = require('express')
-const sequelize = require('../db/db');
+const sequelize = require('../db/db')
 const { DataTypes } = require("sequelize")
 const Products = require('../models/products')(sequelize, DataTypes)
 const {Op} = require('sequelize')

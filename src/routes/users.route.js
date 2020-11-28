@@ -1,4 +1,6 @@
 const express = require('express')
+const sequelize = require('../db/db')
+const { DataTypes } = require("sequelize")
 const User = require('../models/users')(sequelize, DataTypes)
 const userRouter = express.Router()
 
@@ -14,7 +16,7 @@ userRouter.get('/', (req, res, next) => {
 })*/
 
 //Get User Information
-userRouter.get('/', (req, res, next) => {
+userRouter.get('/', async (req, res, next) => {
     if(!req.user){
         var err = {errors: [{message: 'Please Log in'}], status: 400}
         return next(err)
@@ -29,18 +31,20 @@ userRouter.get('/', (req, res, next) => {
 })
 
 //Update User Information
-userRouter.put('/', (req, res, next) => {
+userRouter.put('/', async (req, res, next) => {
     if(!req.user ||  ((JSON.stringify(req.body) === '{}'))){
         var err = {errors: [{message: 'Provide User ID and information'}], status: 400}
         return next(err)
     }
     try{
         //UPDATE TABLE users SET ({body.keys} = {values}, ..) WHERE email = {user.email}
+        console.log(req.body)
+        console.log(JSON.stringify(req.body))
         const user = await User.update(
-            JSON.stringify(req.body), {
+            req.body, {
                 where: {
                     email: req.user.email
-                }
+                }, individualHooks: true
             }
             )
         res.send(user)
@@ -50,4 +54,4 @@ userRouter.put('/', (req, res, next) => {
 })
 
 
-module.exports = authRouter
+module.exports = userRouter
