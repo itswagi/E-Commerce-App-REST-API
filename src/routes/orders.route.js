@@ -115,6 +115,7 @@ ordersRouter.get('/cart', async (req, res, next) => {
 //Checkout
 ordersRouter.put('/checkout/:id', async (req, res, next) => {
     try{
+        //UPDATE orders SET status = 'confirmed' WHERE id = {req.params.id}
         const item = Order.update({ status: 'confirmed'},{
             where: {
                     id: req.params.id
@@ -125,4 +126,5 @@ ordersRouter.put('/checkout/:id', async (req, res, next) => {
         next(err)
     }
 })
+
 module.exports = ordersRouter
