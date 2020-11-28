@@ -29,3 +29,11 @@ More can be found in package.json file under dependencies
 10. Develop locally on your computer
 11. Document the API using Swagger
 12. Deploy API live to Heroku
+
+## Deployed Version
+
+A deployed version can be found at https://ecom-rest-api-example.herokuapp.com/
+
+## API Documentation
+
+The documentation is found at https://ecom-rest-api-example.herokuapp.com/api-docs/
