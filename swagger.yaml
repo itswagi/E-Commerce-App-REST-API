@@ -299,7 +299,7 @@ paths:
       security:
         - Token: []
     post:
-      summary: Add Create
+      summary: Create Order
       consumes:
         - application/json
       parameters:
@@ -400,7 +400,7 @@ paths:
       produces:
         - application/json
       responses:
-        200:
+        201:
           description: Success
           schema:
             type: object
@@ -435,3 +435,127 @@ paths:
         - Orders
       security:
         - Token: []
+        
+  
+  /orders/cart:
+    get:
+      summary: get cart
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Cart list
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              user_id:
+                type: integer
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      tags:
+        - Cart
+      security:
+        - Token: []
+    post:
+      summary: Create item in cart
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Orders List
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              user_id:
+                type: integer
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      tags:
+        - Cart
+      security:
+        - Token: []       
+        
+  /orders/cart/{id}:
+    delete:
+      summary: Deletes item from cart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+      responses:
+        204:
+          description: Success
+      tags:
+        - Cart
+      security:
+        - Token: []
+  
+  /orders/checkout/{id}:
+    put:
+      summary: Confirm order in Cart
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      produces:
+        - application/json
+      responses:
+        201:
+          description: Success
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              user_id:
+                type: integer
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      tags:
+          - Checkout
+      security:
+        - Token: []
+        
+      
+    
