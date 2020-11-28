@@ -298,7 +298,50 @@ paths:
         - Orders
       security:
         - Token: []
-
+    post:
+      summary: Add Create
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: payload
+          required: true
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Orders List
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              user_id:
+                type: integer
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      tags:
+        - Orders
+      security:
+        - Token: []
+    
   /orders/{id}:
     get:
       summary: Get Order by ID
@@ -327,6 +370,67 @@ paths:
                 type: integer
               status:
                 type: string
+      tags:
+        - Orders
+      security:
+        - Token: []
+    put:
+      summary: Update Order
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+        - name: payload
+          in: body
+          required: true
+          schema:
+            type: object
+            properties:
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              user_id:
+                type: integer
+              product_id:
+                type: integer
+              quantity:
+                type: integer
+              amount:
+                type: integer
+              status:
+                type: string
+      tags:
+          - Orders
+      security:
+        - Token: []
+    delete:
+      summary: Deletes Order
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+      responses:
+        204:
+          description: Success
       tags:
         - Orders
       security:

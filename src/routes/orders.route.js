@@ -77,12 +77,24 @@ ordersRouter.put('/:id', async (req, res, next) => {
                 }
             }
         )
+        res.status(200).send(order)
     }catch(err){
         next(err)
     }
 })
 
+//Delete Order
+ordersRouter.delete('/:id', async (req, res, next) => {
+    try{
+        await Order.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+        res.status(204).send()
+    }catch(err){
+        next(err)
+    }
+})
 
-//var err = {errors: [{message: 'Provide Product Information'}], status: 400}
-//return next(err)
 module.exports = ordersRouter
