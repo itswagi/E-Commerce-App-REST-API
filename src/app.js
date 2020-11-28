@@ -38,12 +38,15 @@ const userRouter = require('./routes/users.route')
 
 //User Signup and Login Routes
 app.use('/', authRouter)
-app.use(passport.authenticate('jwt', { session: false })) //Authorization Middleware
-app.use('/users', userRouter)
-app.use('/products', productsRouter)
-app.use('/orders', ordersRouter)
-app.use('/billing', billingRouter)
+//app.use(passport.authenticate('jwt', { session: false })) //Authorization Middleware
+app.use('/users', passport.authenticate('jwt', { session: false }), userRouter)
+app.use('/products', passport.authenticate('jwt', { session: false }), productsRouter)
+app.use('/orders', passport.authenticate('jwt', { session: false }), ordersRouter)
+app.use('/billing', passport.authenticate('jwt', { session: false }), billingRouter)
 
+app.use('/', (req, res) => {
+    res.send('Express-Postgress-Sequelize-Passport-Ecommerce-Rest-API')
+})
 //Disabled for Development
 //app.use('/auth', authRouter)
 
