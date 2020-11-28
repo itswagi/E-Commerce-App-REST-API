@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "An example project showing rest api setup with express, passport, sequelize, postgresql",
   "main": "src/app.js",
+  "engine": {
+    "node": "14.14.0",
+    "npm": "6.14.8"
+  },
   "scripts": {
-    "start": "nodemon --exec babel-node src/app.js",
+    "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

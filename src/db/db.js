@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 require('dotenv').config({path: '../../.env'});
-
+/*
 const sequelize = new Sequelize({
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
@@ -10,7 +10,8 @@ const sequelize = new Sequelize({
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     logging: false
-
 })
+*/
+const sequelize = new Sequelize(process.env.DATABASE_URL)
 
 module.exports = sequelize
