@@ -42,7 +42,7 @@ ordersRouter.get('/:id', async (req, res, next) => {
     }
 })
 
-//Create Order
+//Create Order in Cart
 ordersRouter.post('/', async (req, res, next) => {
     if(!req.body || (JSON.stringify(req.body) === '{}')){
         var err = {errors: [{message: 'Provide Order Information'}], status: 400}
@@ -97,4 +97,32 @@ ordersRouter.delete('/:id', async (req, res, next) => {
     }
 })
 
+//Get Cart
+ordersRouter.get('/cart', async (req, res, next) => {
+    try{
+        //SELECT * FROM orders WHERE status = 'cart'
+        const cart = await Order.findAll({
+            where: {
+                status: 'cart'
+            }
+        })
+        res.send(cart)
+    }catch(err){
+        next(err)
+    }
+})
+
+//Checkout
+ordersRouter.put('/checkout/:id', async (req, res, next) => {
+    try{
+        const item = Order.update({ status: 'confirmed'},{
+            where: {
+                    id: req.params.id
+            }
+        })
+        res.status(201).send(item)
+    }catch(err){
+        next(err)
+    }
+})
 module.exports = ordersRouter
