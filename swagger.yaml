@@ -298,7 +298,7 @@ paths:
         - Orders
       security:
         - Token: []
-        
+
   /orders/{id}:
     get:
       summary: Get Order by ID

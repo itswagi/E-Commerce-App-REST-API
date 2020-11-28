@@ -6,7 +6,7 @@ const Order = require('../models/orders')(sequelize, DataTypes)
 const ordersRouter = express.Router()
 
 //Get Orders
-ordersRouter.get('/', (req, res, next) => {
+ordersRouter.get('/', async (req, res, next) => {
     try{
         //SELECT id FROM users WHERE email = {req.user.email}
         const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
@@ -24,7 +24,7 @@ ordersRouter.get('/', (req, res, next) => {
 })
 
 //Get Order by id
-ordersRouter.get('/:id', (req, res, next) => {
+ordersRouter.get('/:id', async (req, res, next) => {
     try{
         //SELECT id FROM users WHERE email = {req.user.email}
         const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
@@ -37,6 +37,46 @@ ordersRouter.get('/:id', (req, res, next) => {
             }
         })
         res.send(order)
+    }catch(err){
+        next(err)
+    }
+})
+
+//Create Order
+ordersRouter.post('/', async (req, res, next) => {
+    if(!req.body || (JSON.stringify(req.body) === '{}')){
+        var err = {errors: [{message: 'Provide Order Information'}], status: 400}
+        return next(err)
+    }
+    try{
+        //SELECT id FROM users WHERE email = {req.user.email}
+        const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
+        req.body.user_id = userId
+        const order = await Order.create(JSON.stringify(req.body))
+        res.status(201).send(order)
+    }catch(err){
+        next(err)
+    }
+})
+
+//Update Order
+ordersRouter.put('/:id', async (req, res, next) => {
+    if(!req.params.id || ((JSON.stringify(req.body) === '{}'))){
+        var err = {errors: [{message: 'Provide Order Information'}], status: 400}
+        return next(err)
+    }
+    try{
+        const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
+        req.body.user_id = userId
+        const order = await Order.update(
+            JSON.stringify(req.body), {
+                where: {
+                    [Op.and]: [
+                        {id: req.params.id}, {user_id: userId}
+                    ]
+                }
+            }
+        )
     }catch(err){
         next(err)
     }
