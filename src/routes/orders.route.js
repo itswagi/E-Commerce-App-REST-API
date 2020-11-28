@@ -28,6 +28,7 @@ ordersRouter.get('/:id', (req, res, next) => {
     try{
         //SELECT id FROM users WHERE email = {req.user.email}
         const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
+        //SELECT * FROM orders WHERE user_id = {userId} AND id = {req.params.id}
         const order = await Order.findOne({
             where: {
                 [Op.and]: [
