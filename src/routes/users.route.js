@@ -38,8 +38,6 @@ userRouter.put('/', async (req, res, next) => {
     }
     try{
         //UPDATE TABLE users SET ({body.keys} = {values}, ..) WHERE email = {user.email}
-        console.log(req.body)
-        console.log(JSON.stringify(req.body))
         const user = await User.update(
             req.body, {
                 where: {

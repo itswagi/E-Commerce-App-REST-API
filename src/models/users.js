@@ -41,7 +41,6 @@ module.exports = function (sequelize, Sequelize) {
         return user.password = await bcrypt.hash(user.password, 10)
     })
     User.beforeUpdate(async (user, options) => {
-        console.log('1')
         return user.password = await bcrypt.hash(user.password, 10)
     })
     return User

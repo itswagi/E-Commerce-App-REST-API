@@ -41,7 +41,7 @@ app.use('/', authRouter)
 app.use(passport.authenticate('jwt', { session: false })) //Authorization Middleware
 app.use('/users', userRouter)
 app.use('/products', productsRouter)
-app.use('/order', ordersRouter)
+app.use('/orders', ordersRouter)
 app.use('/billing', billingRouter)
 
 //Disabled for Development
