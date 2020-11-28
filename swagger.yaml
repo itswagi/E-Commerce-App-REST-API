@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: E-Commerce REST API
   version: 1.0.0  
-host: ecom-rest-api-example.herokuapp.com
+host: localhost:3000
 basePath: /
 securityDefinitions:
   Token:
