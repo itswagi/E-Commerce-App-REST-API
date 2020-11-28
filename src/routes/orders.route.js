@@ -42,8 +42,8 @@ ordersRouter.get('/:id', async (req, res, next) => {
     }
 })
 
-//Create Order in Cart
-ordersRouter.post('/', async (req, res, next) => {
+//Create Order
+ordersRouter.post('/cart', async (req, res, next) => {
     if(!req.body || (JSON.stringify(req.body) === '{}')){
         var err = {errors: [{message: 'Provide Order Information'}], status: 400}
         return next(err)
@@ -107,6 +107,23 @@ ordersRouter.get('/cart', async (req, res, next) => {
             }
         })
         res.send(cart)
+    }catch(err){
+        next(err)
+    }
+})
+
+//Create Order in Cart
+ordersRouter.post('/cart', async (req, res, next) => {
+    if(!req.body || (JSON.stringify(req.body) === '{}')){
+        var err = {errors: [{message: 'Provide Order Information'}], status: 400}
+        return next(err)
+    }
+    try{
+        //SELECT id FROM users WHERE email = {req.user.email}
+        const userId = await User.findOne({attributes: ['id']}, {where: {email: req.user.email}})
+        req.body.user_id = userId
+        const order = await Order.create(JSON.stringify(req.body))
+        res.status(201).send(order)
     }catch(err){
         next(err)
     }
