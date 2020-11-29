@@ -68,3 +68,5 @@ app.listen(process.env.PORT, async () => {
         console.error(`Error: Cannot connect to database ${error}`)
     }
 })
+
+module.exports = app
