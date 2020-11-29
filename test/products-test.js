@@ -1,6 +1,6 @@
 const request = require('supertest')
 
-const app = require('../src/app')
+const app = 'http://localhost:3000'
 
 describe('Products', () => {
     it('returns all products', async () => {
